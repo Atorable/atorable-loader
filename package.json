@@ -1,0 +1,41 @@
+{
+  "name": "atorable-loader",
+  "version": "1.0.0",
+  "description": "Webpack loader for turning files into Magnet links",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "source": "src/index.ts",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "clean-dist": "rimraf dist/*",
+    "build": "npm run clean-dist && npx tsc --project tsconfig.json"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/sergethompson/atorable-loader"
+  },
+  "keywords": [
+    "webtorrent",
+    "react",
+    "webpack",
+    "tor",
+    "img",
+    "video",
+    "loader"
+  ],
+  "dependencies": {
+    "create-torrent": "^4.7.0",
+    "loader-utils": "^2.0.0",
+    "parse-torrent": "^9.1.3",
+    "webtorrent-hybrid": "4.1.0"
+  },
+  "devDependencies": {
+    "@types/create-torrent": "^4.4.0",
+    "@types/loader-utils": "^2.0.2",
+    "@types/node": "^15.14.0",
+    "@types/parse-torrent": "^5.8.3",
+    "typescript": "^4.3.5"
+  },
+  "author": "Serge Thompson",
+  "license": "ISC"
+}
