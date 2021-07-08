@@ -1,8 +1,8 @@
-// GetSeeded.ts
+// BuildMagnetAndTorrentBuf.ts
 import parseTorrent from "parse-torrent";
 import createTorrent from "create-torrent";
 
-export const GetTorrentSeedAsync = (assetRelPath: string,torRelPath: string, baseURL: string, rootContext: string) => {
+export const GetMagnetAndTorrentBuf = (assetRelPath: string,torRelPath: string, baseURL: string, rootContext: string) => {
 
       return new Promise<{magnetURI: string, torrentBuf: Buffer}>((resolve) => {
         let assetAbsoutePath = rootContext +"/" + assetRelPath;
@@ -35,4 +35,4 @@ let buildMagnetURI = (torrentBuf: Buffer, baseURL: string, assetRelPath: string,
 }
 
 // https://stackoverflow.com/questions/38296667/getting-unexpected-token-export
-module.exports = {GetTorrentSeedAsync}
+module.exports = {GetMagnetAndTorrentBuf: GetMagnetAndTorrentBuf}

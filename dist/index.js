@@ -36,15 +36,16 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
     }
 };
 Object.defineProperty(exports, "__esModule", { value: true });
+// index.ts
 var loader_utils_1 = require("loader-utils");
-var GetSeeded_1 = require("./GetSeeded");
+var BuildMagnetAndTorrentBuf_1 = require("./BuildMagnetAndTorrentBuf");
 module.exports = function loader(content, sourceMap) {
     return __awaiter(this, void 0, void 0, function () {
-        var options, callback, context, name, assetPath, torrentPath, baseURL, seed, esModule;
+        var options, callback, context, assetPath, torrentPath, baseURL, seed;
         return __generator(this, function (_a) {
             switch (_a.label) {
                 case 0:
-                    options = loader_utils_1.getOptions(this), callback = this.async(), context = options.context || this.rootContext, name = options.name || '[contenthash].[ext]', assetPath = loader_utils_1.interpolateName(this, name, {
+                    options = loader_utils_1.getOptions(this), callback = this.async(), context = this.rootContext, assetPath = loader_utils_1.interpolateName(this, '[path][name].[ext]', {
                         context: context,
                         content: content,
                         regExp: options.regExp,
@@ -57,13 +58,12 @@ module.exports = function loader(content, sourceMap) {
                     if (options.rootUrl) {
                         baseURL = options.rootUrl();
                     }
-                    return [4 /*yield*/, GetSeeded_1.GetTorrentSeedAsync(assetPath, torrentPath, baseURL, this.rootContext)];
+                    return [4 /*yield*/, BuildMagnetAndTorrentBuf_1.GetMagnetAndTorrentBuf(assetPath, torrentPath, baseURL, this.rootContext)];
                 case 1:
                     seed = _a.sent();
                     this.emitFile(torrentPath, seed.torrentBuf, sourceMap);
                     this.emitFile(assetPath, content, sourceMap);
-                    esModule = typeof options.esModule !== 'undefined' ? options.esModule : true;
-                    callback(null, (esModule ? 'export default' : 'module.exports =') + " \"" + seed.torrent + "\";");
+                    callback(null, "export default \"" + seed.magnetURI + "\";");
                     return [2 /*return*/];
             }
         });
