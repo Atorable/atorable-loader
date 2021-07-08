@@ -35,39 +35,39 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
         if (op[0] & 5) throw op[1]; return { value: op[0] ? op[1] : void 0, done: true };
     }
 };
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
-};
 Object.defineProperty(exports, "__esModule", { value: true });
-// fileToTorrentLoader.js
-var path_1 = __importDefault(require("path"));
 var loader_utils_1 = require("loader-utils");
 var GetSeeded_1 = require("./GetSeeded");
 module.exports = function loader(content, sourceMap) {
     return __awaiter(this, void 0, void 0, function () {
-        var options, callback, context, name, url, outputPath, relativePath, seed, seedTor, esModule;
+        var options, callback, context, name, assetPath, torrentPath, baseURL, seed, esModule;
         return __generator(this, function (_a) {
             switch (_a.label) {
                 case 0:
-                    options = loader_utils_1.getOptions(this), callback = this.async(), context = options.context || this.rootContext, name = options.name || '[contenthash].[ext]';
-                    url = loader_utils_1.interpolateName(this, name, {
+                    options = loader_utils_1.getOptions(this), callback = this.async(), context = options.context || this.rootContext, name = options.name || '[contenthash].[ext]', assetPath = loader_utils_1.interpolateName(this, name, {
+                        context: context,
+                        content: content,
+                        regExp: options.regExp,
+                    }), torrentPath = loader_utils_1.interpolateName(this, '[path][name].torrent', {
                         context: context,
                         content: content,
                         regExp: options.regExp,
                     });
-                    outputPath = url;
-                    relativePath = path_1.default.relative(this.rootContext, this.resourcePath);
-                    return [4 /*yield*/, GetSeeded_1.GetTorrentSeedAsync(relativePath, options.baseURL, this.rootContext)];
+                    baseURL = options.baseURL;
+                    if (options.rootUrl) {
+                        baseURL = options.rootUrl();
+                    }
+                    return [4 /*yield*/, GetSeeded_1.GetTorrentSeedAsync(assetPath, torrentPath, baseURL, this.rootContext)];
                 case 1:
                     seed = _a.sent();
-                    this.emitFile(seed.torPathName, seed.torrentBuf, sourceMap);
-                    seedTor = "\"" + seed.torrent + "\"";
-                    this.emitFile(outputPath, content, sourceMap);
+                    this.emitFile(torrentPath, seed.torrentBuf, sourceMap);
+                    this.emitFile(assetPath, content, sourceMap);
                     esModule = typeof options.esModule !== 'undefined' ? options.esModule : true;
-                    callback(null, (esModule ? 'export default' : 'module.exports =') + " " + seedTor + ";");
+                    callback(null, (esModule ? 'export default' : 'module.exports =') + " \"" + seed.torrent + "\";");
                     return [2 /*return*/];
             }
         });
     });
 };
 module.exports.raw = true;
+//# sourceMappingURL=index.js.map

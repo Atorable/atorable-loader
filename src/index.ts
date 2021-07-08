@@ -1,35 +1,47 @@
-// fileToTorrentLoader.js
+// index.ts
 import path from "path";
-import { getOptions, interpolateName, OptionObject } from "loader-utils";
+import { getOptions, interpolateName } from "loader-utils";
 import { GetTorrentSeedAsync } from "./GetSeeded";
 import webpack from "webpack";
 
+interface Options{
+  context: string;
+  name: string;
+  baseURL: string;
+  regExp: RegExp;
+  rootUrl: Function;
+  esModule: string;
+}
+
 module.exports =  async function loader(this: webpack.loader.LoaderContext, content: any, sourceMap: any) {
-    const options: Readonly<OptionObject> = getOptions(this),
+    const options = <Options> <unknown>getOptions(this),
           callback = this.async()!,
           context = options.context || this.rootContext,
-          name: string = <string> options.name || '[contenthash].[ext]';
+          name: string = <string> options.name || '[contenthash].[ext]',
+          assetPath = interpolateName(this, name, {
+                context,
+                content,
+                regExp: options.regExp,
+              }),
+          torrentPath = interpolateName(this, '[path][name].torrent', {
+                context,
+                content,
+                regExp: options.regExp,
+              });
 
-    const url = interpolateName(this, name, {
-      context,
-      content,
-      regExp: options.regExp,
-    });
-    let outputPath = url;
+    let baseURL = <string> options.baseURL;
+    if (options.rootUrl){
+      baseURL =  options.rootUrl()
+    }
 
-    const relativePath = path.relative(this.rootContext, this.resourcePath);
+    let seed = await GetTorrentSeedAsync(assetPath, torrentPath, baseURL, this.rootContext);
 
-    let seed = await GetTorrentSeedAsync(relativePath, <string> options.baseURL, this.rootContext);
-    this.emitFile(seed.torPathName, seed.torrentBuf, sourceMap);
-
-    let seedTor = `"${seed.torrent}"`
-
-    this.emitFile(outputPath, content, sourceMap);
+    this.emitFile(torrentPath, seed.torrentBuf, sourceMap);
+    this.emitFile(assetPath, content, sourceMap);
 
     const esModule =
       typeof options.esModule !== 'undefined' ? options.esModule : true;
-
-    callback(null,  `${esModule ? 'export default' : 'module.exports ='} ${seedTor};`);
+    callback(null,  `${esModule ? 'export default' : 'module.exports ='} "${seed.magnetURI}";`);
 }
 
 module.exports.raw = true;

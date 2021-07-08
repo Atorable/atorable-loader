@@ -2,6 +2,7 @@
   "compilerOptions": {
     "target": "es5",
     "module": "commonjs",
+    "sourceMap": true,
     "lib": ["es2017", "es7", "es6", "dom"],
     "declaration": true,
     "outDir": "dist",
