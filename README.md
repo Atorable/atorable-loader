@@ -1,6 +1,6 @@
 # atorable-loader
 
-The `atorable-loader` resolves `import`/`require()` on a file into a webtorrent magnetUri. During the webpack build the original file is emitted along with the associated torrent file into the output directory. The emitted files are the original seeds for the torrent. This works closely with [`atorable-react`](https://github.com/sergethompson/atorable-loader).
+The `atorable-loader` resolves `import`/`require()` on a file into a webtorrent magnet uri. During the webpack build the original file is emitted along with the associated torrent file into the output directory. The emitted files are the original seeds for the torrent. This works closely with [`atorable-react`](https://github.com/sergethompson/atorable-loader).
 
 ## Getting Started
 
@@ -42,7 +42,7 @@ Then add the loader to your `webpack` config. For example:
 **webpack.config.js**
 
 ```js
-const baseURL = "http://localhost:8080/"; // Define your base url http://example.com/
+const baseURL = "http://localhost:8080/"; // Define your base url http://example.com/ this makes it possible for the initial torrent to be downloaded.
 
 module.exports = {
   module: {
