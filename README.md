@@ -1,7 +1,7 @@
 # atorable-loader
 
 <p align="center">
-  <img src="https://github.com/sergethompson/atorable-loader/blob/main/atorable.png" height="300" width="300" title="atorable logo">
+  <img src="https://github.com/sergethompson/atorable-loader/blob/main/atorable.png" height="300" width="300" title="atorable logo">©
 </p>
 
 The `atorable-loader` resolves `import`/`require()` on a file into a webtorrent magnet uri. During the webpack build the original file is emitted along with the associated torrent file into the output directory. The emitted files are the original seeds for the torrent. This works closely with [`atorable-react`](https://github.com/sergethompson/atorable-loader).
