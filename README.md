@@ -139,5 +139,9 @@ module.exports = {
 };
 ```
 
+## Thank you
+[Webtorrent](https://webtorrent.io/)
+[Webpack](https://webpack.js.org/)
+
 ## License
 [MIT](./LICENSE) © [Serge Thompson](https://github.com/sergethompson)

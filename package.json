@@ -1,6 +1,6 @@
 {
   "name": "atorable-loader",
-  "version": "1.0.0",
+  "version": "0.0.2",
   "description": "Webpack loader for turning files into Magnet links",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
@@ -12,7 +12,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/sergethompson/atorable-loader"
+    "url": "https://github.com/Atorable/atorable-loader"
   },
   "keywords": [
     "webtorrent",
