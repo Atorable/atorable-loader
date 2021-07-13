@@ -8,7 +8,7 @@ Why? Decreased data from your server.
 
 The `atorable-loader` resolves `import`/`require()` on a file into a [Webtorrent](https://webtorrent.io/) magnet uri. 
 
-During the webpack build the target file is emitted along with the corresponding torrent file into the output directory. The emitted files act as the seeds for the torrent when the root url is provide to the build. This works closely with [`atorable-react`](https://github.com/Atorable/atorable-react).
+During the webpack build the target file is emitted along with the corresponding torrent file into the output directory. The emitted files act as the seeds for the torrent when the root url is provided to the build. This works closely with [`atorable-react`](https://github.com/Atorable/atorable-react).
 
 ## Getting Started
 
