@@ -18,7 +18,7 @@ To begin, you'll need to install `atorable-loader`:
 $ npm install atorable-loader --save-dev
 ```
 
-Import (or `require`) the target file(s) in one of the bundle's files:
+Import (or `require`) the target file(s) in one of the bundle's files (see [`atorable-react`](https://github.com/Atorable/atorable-react)):
 
 **file.tsx**
 
