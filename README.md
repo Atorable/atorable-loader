@@ -4,7 +4,9 @@
   <img src="https://github.com/sergethompson/atorable-loader/blob/main/atorable.png" height="300" width="300" title="atorable logo">©
 </p>
 
-The `atorable-loader` resolves `import`/`require()` on a file into a webtorrent magnet uri. During the webpack build the original file is emitted along with the associated torrent file into the output directory. The emitted files are the original seeds for the torrent. This works closely with [`atorable-react`](https://github.com/sergethompson/atorable-loader).
+Why? Decreased data from your server.
+
+The `atorable-loader` resolves `import`/`require()` on a file into a [Webtorrent](https://webtorrent.io/) magnet uri. During the webpack build the original file is emitted along with the associated torrent file into the output directory. The emitted files are the original seeds for the torrent. This works closely with [`atorable-react`](https://github.com/Atorable/atorable-react).
 
 ## Getting Started
 
@@ -46,7 +48,8 @@ Then add the loader to your `webpack` config. For example:
 **webpack.config.js**
 
 ```js
-const baseURL = "http://localhost:8080/"; // Define your base url http://example.com/ this makes it possible for the initial torrent to be downloaded.
+const baseURL = "http://localhost:8080/"; // Define your base url http://example.com/
+// this makes it possible for the initial torrent to be downloaded.
 
 module.exports = {
   module: {
@@ -67,12 +70,12 @@ module.exports = {
 };
 ```
 
-And run `webpack` via your preferred method. This will emit `file.png` and a `file.torrent` as a file
+And run `webpack` via your preferred method. This will emit `file.png` and a `file.torrent` file
 in the output directory.
 
 ## Options
 #### `Function`
-For use with a set build environment `NODE_ENV=development` (exterior to webpack env settings i.e. EnvironmentPlugin)
+For use with a set build environment `NODE_ENV=development` (not relevant to webpack env settings i.e. EnvironmentPlugin)
 
 
 **webpack.config.js**
