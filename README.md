@@ -1,5 +1,9 @@
 # atorable-loader
 
+<p align="center">
+  <img src="https://github.com/sergethompson/atorable-loader/blob/main/atorable.png" height="300" width="300" title="atorable logo">
+</p>
+
 The `atorable-loader` resolves `import`/`require()` on a file into a webtorrent magnet uri. During the webpack build the original file is emitted along with the associated torrent file into the output directory. The emitted files are the original seeds for the torrent. This works closely with [`atorable-react`](https://github.com/sergethompson/atorable-loader).
 
 ## Getting Started
@@ -20,13 +24,13 @@ import { VidStrmATor, ImgATor, VidATor } from 'atorable-react'
 
 import hugeImage from './hugeImage.jpg';
 import bestMovieEverTribute from './bestMovieEverTribute.mp4';
-const  oceanFish = require('./oceanFish.mp4');
+const  oceanFish = require('./oceanFish.m4v');
 
 class Example extends Component {
   render() {
     return (
       <div>
-        <VidATor width='320' height='240' magnetLink={oceanFish} />
+        <VidATor width='320' height='240' type={'video/m4v'} magnetLink={oceanFish} />
 
         <VidStrmATor width='320' height='240' autoplay={true} magnetLink={bestMovieEverTribute} />
 
