@@ -91,16 +91,21 @@ module.exports = {
     rules: [
       {
         test: /\.(png|jpe?g|gif)$/i,
-        loader: 'atorable-loader',
-        options: {
-          rootUrl() {
-                if (process.env.NODE_ENV === 'development') {
-                return baseURL;
-                }
+        use: [
+          {
+            loader: 'atorable-loader',
+            options: {
+              rootUrl() {
+                  console.log("Here Node env: ", process.env.NODE_ENV)
+                  if (process.env.NODE_ENV === 'development') {
+                    return baseURL;
+                  }
 
-                return prodURL;
+                  return prodURL;
+                },
             },
-        },
+          },
+        ],
       },
     ],
   },
@@ -122,10 +127,14 @@ module.exports = {
     rules: [
       {
         test: /\.(png|jpe?g|gif)$/i,
-        loader: 'atorable-loader',
-        options: {
-            baseURL: baseURL,
-        },
+        use: [
+          {
+            loader: 'atorable-loader',
+            options: {
+              baseURL: baseURL,
+            },
+          },
+        ],
         include: [
             path.resolve(__dirname, "img"), 
         ],
