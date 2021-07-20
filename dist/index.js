@@ -48,11 +48,11 @@ module.exports = function loader(content, sourceMap) {
                     options = loader_utils_1.getOptions(this), callback = this.async(), context = this.rootContext, assetPath = loader_utils_1.interpolateName(this, '[path][name].[ext]', {
                         context: context,
                         content: content,
-                        regExp: options.regExp,
+                        regExp: options.regExp
                     }), torrentPath = loader_utils_1.interpolateName(this, '[path][name].torrent', {
                         context: context,
                         content: content,
-                        regExp: options.regExp,
+                        regExp: options.regExp
                     });
                     baseURL = options.baseURL;
                     if (options.rootUrl) {
