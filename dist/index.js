@@ -58,11 +58,11 @@ module.exports = function loader(content, sourceMap) {
                     if (options.rootUrl) {
                         baseURL = options.rootUrl();
                     }
-                    return [4 /*yield*/, BuildMagnetAndTorrentBuf_1.GetMagnetAndTorrentBuf(assetPath, torrentPath, baseURL, this.rootContext)];
+                    return [4 /*yield*/, BuildMagnetAndTorrentBuf_1.GetMagnetAndTorrentBuf(content, assetPath, torrentPath, baseURL)];
                 case 1:
                     seed = _a.sent();
-                    this.emitFile(torrentPath, seed.torrentBuf, sourceMap);
                     this.emitFile(assetPath, content, sourceMap);
+                    this.emitFile(torrentPath, seed.torrentBuf, sourceMap);
                     callback(null, "export default \"" + seed.magnetURI + "\";");
                     return [2 /*return*/];
             }

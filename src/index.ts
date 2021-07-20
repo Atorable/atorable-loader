@@ -29,10 +29,10 @@ module.exports =  async function loader(this: webpack.loader.LoaderContext, cont
       baseURL =  options.rootUrl()
     }
 
-    let seed = await GetMagnetAndTorrentBuf(assetPath, torrentPath, baseURL, this.rootContext);
+    let seed = await GetMagnetAndTorrentBuf(content, assetPath, torrentPath, baseURL);
 
-    this.emitFile(torrentPath, seed.torrentBuf, sourceMap);
     this.emitFile(assetPath, content, sourceMap);
+    this.emitFile(torrentPath, seed.torrentBuf, sourceMap);
 
     callback(null,  `export default "${seed.magnetURI}";`);
 }

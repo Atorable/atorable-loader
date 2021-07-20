@@ -7,10 +7,11 @@ exports.GetMagnetAndTorrentBuf = void 0;
 // BuildMagnetAndTorrentBuf.ts
 var parse_torrent_1 = __importDefault(require("parse-torrent"));
 var create_torrent_1 = __importDefault(require("create-torrent"));
-var GetMagnetAndTorrentBuf = function (assetRelPath, torRelPath, baseURL, rootContext) {
+var path = require('path');
+var GetMagnetAndTorrentBuf = function (assetBuffer, assetRelPath, torRelPath, baseURL) {
     return new Promise(function (resolve) {
-        var assetAbsoutePath = rootContext + "/" + assetRelPath;
-        create_torrent_1.default(assetAbsoutePath, function (err, torrentBuf) {
+        var filename = path.parse(assetRelPath).base;
+        create_torrent_1.default(assetBuffer, { name: filename }, function (err, torrentBuf) {
             if (!err) {
                 var magnetURI = buildMagnetURI(torrentBuf, baseURL, assetRelPath, torRelPath);
                 console.log(magnetURI);

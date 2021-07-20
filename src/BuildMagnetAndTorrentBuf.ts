@@ -1,13 +1,14 @@
 // BuildMagnetAndTorrentBuf.ts
 import parseTorrent from "parse-torrent";
 import createTorrent from "create-torrent";
+var path = require('path');
 
-export const GetMagnetAndTorrentBuf = (assetRelPath: string,torRelPath: string, baseURL: string, rootContext: string) => {
+export const GetMagnetAndTorrentBuf = (assetBuffer: any,assetRelPath: string,torRelPath: string, baseURL: string) => {
 
       return new Promise<{magnetURI: string, torrentBuf: Buffer}>((resolve) => {
-        let assetAbsoutePath = rootContext +"/" + assetRelPath;
+        let filename = path.parse(assetRelPath).base;
 
-        createTorrent(assetAbsoutePath, (err, torrentBuf) => {
+        createTorrent(assetBuffer, {name: filename}, (err, torrentBuf) => {
             if (!err) {
                 let magnetURI = buildMagnetURI(torrentBuf, baseURL, assetRelPath, torRelPath);
                 console.log(magnetURI)
@@ -16,7 +17,7 @@ export const GetMagnetAndTorrentBuf = (assetRelPath: string,torRelPath: string, 
             } else {
                 console.error(err)
             }
-        })     
+        })
       });
     };
 
