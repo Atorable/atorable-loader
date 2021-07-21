@@ -62,7 +62,7 @@ module.exports = function loader(content, sourceMap) {
                 case 1:
                     seed = _a.sent();
                     this.emitFile(assetPath, content, sourceMap);
-                    this.emitFile(torrentPath, seed.torrentBuf, sourceMap);
+                    this.emitFile(torrentPath, seed.torrentBuf, null);
                     callback(null, "export default \"" + seed.magnetURI + "\";");
                     return [2 /*return*/];
             }

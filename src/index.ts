@@ -41,7 +41,7 @@ module.exports = async function loader(
     )
 
     this.emitFile(assetPath, content, sourceMap)
-    this.emitFile(torrentPath, seed.torrentBuf, sourceMap)
+    this.emitFile(torrentPath, seed.torrentBuf, null)
 
     callback(null, `export default "${seed.magnetURI}";`)
 }
