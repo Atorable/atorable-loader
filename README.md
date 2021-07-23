@@ -10,7 +10,7 @@ The `atorable-loader` resolves `import`/`require()` of a file into a [Webtorrent
 
 During the webpack build the target file is emitted along with the corresponding torrent file into the output directory. The emitted files act as the seeds for the torrent when the root url is provided to the build. This works closely with [atorable-react][atorable-react-source].
 
-###[Demo][atorable-react]
+#### [Demo][atorable-react]
 
 ## Getting Started
 
