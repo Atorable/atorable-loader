@@ -6,9 +6,11 @@
 
 Why? Decreased data from your server.
 
-The `atorable-loader` resolves `import`/`require()` on a file into a [Webtorrent](https://webtorrent.io/) magnet uri.
+The `atorable-loader` resolves `import`/`require()` of a file into a [Webtorrent](https://webtorrent.io/) magnet uri.
 
-During the webpack build the target file is emitted along with the corresponding torrent file into the output directory. The emitted files act as the seeds for the torrent when the root url is provided to the build. This works closely with [`atorable-react`](https://github.com/Atorable/atorable-react).
+During the webpack build the target file is emitted along with the corresponding torrent file into the output directory. The emitted files act as the seeds for the torrent when the root url is provided to the build. This works closely with [atorable-react][atorable-react-source].
+
+####[Demo][atorable-react]
 
 ## Getting Started
 
@@ -18,7 +20,7 @@ To begin, you'll need to install `atorable-loader`:
 $ npm install atorable-loader --save-dev
 ```
 
-Import (or `require`) the target file(s) in one of the bundle's files (see [`atorable-react`](https://github.com/Atorable/atorable-react)):
+Import (or `require`) the target file(s) in one of the bundle's files (see [atorable-react][atorable-react-source]):
 
 **file.tsx**
 
@@ -26,9 +28,9 @@ Import (or `require`) the target file(s) in one of the bundle's files (see [`ato
 import React, { Component } from 'react'
 import { VidStrmATor, ImgATor, VidATor } from 'atorable-react'
 
-import hugeImage from './hugeImage.jpg'
-import bestMovieEverTribute from './bestMovieEverTribute.mp4'
-const oceanFish = require('./oceanFish.m4v')
+import hugeImage from './hugeImage.jpg' // ==> 'magnet:?xt=urn:...'
+import bestMovieEverTribute from './bestMovieEverTribute.mp4' // ==> 'magnet:?xt=urn:...'
+const oceanFish = require('./oceanFish.m4v') // ==> {default: 'magnet:?xt=urn:...'}
 
 class Example extends Component {
     render() {
@@ -171,3 +173,6 @@ module.exports = {
 ## License
 
 [MIT](./LICENSE) © [Serge Thompson](https://github.com/sergethompson)
+
+[atorable-react]: https://atorable.github.io/atorable-react/
+[atorable-react-source]: https://github.com/Atorable/atorable-react

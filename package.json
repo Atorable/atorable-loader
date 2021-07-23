@@ -3,7 +3,7 @@
     "publishConfig": {
         "registry": "https://registry.npmjs.org/"
     },
-    "version": "0.0.6",
+    "version": "0.0.7",
     "description": "Webpack loader for turning files into Magnet links",
     "main": "dist/index.js",
     "types": "dist/index.d.ts",
