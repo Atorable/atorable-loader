@@ -3,7 +3,7 @@
     "publishConfig": {
         "registry": "https://registry.npmjs.org/"
     },
-    "version": "0.0.8",
+    "version": "0.0.9",
     "description": "Webpack loader for turning files into Magnet links",
     "main": "dist/index.js",
     "types": "dist/index.d.ts",
@@ -28,18 +28,21 @@
         "loader"
     ],
     "dependencies": {
-        "create-torrent": "^4.7.0",
-        "loader-utils": "^2.0.0",
-        "parse-torrent": "^9.1.3",
-        "webtorrent-hybrid": "4.1.0"
+        "create-torrent": "^5.0.1",
+        "form-data": "^4.0.0",
+        "loader-utils": "^3.2.0",
+        "node-fetch": "^2.6.6",
+        "parse-torrent": "^9.1.4"
     },
     "devDependencies": {
-        "@types/create-torrent": "^4.4.0",
-        "@types/loader-utils": "^2.0.2",
-        "@types/node": "^15.14.0",
-        "@types/parse-torrent": "^5.8.3",
-        "prettier": "2.3.2",
-        "typescript": "^4.3.5"
+        "@types/create-torrent": "^5.0.0",
+        "@types/loader-utils": "^2.0.3",
+        "@types/node": "^16.11.12",
+        "@types/node-fetch": "^2.5.12",
+        "@types/parse-torrent": "^5.8.4",
+        "prettier": "^2.5.1",
+        "rimraf": "^3.0.2",
+        "typescript": "^4.5.3"
     },
     "author": "Serge Thompson",
     "license": "ISC"

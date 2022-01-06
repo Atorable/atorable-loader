@@ -1,23 +1,27 @@
 // index.ts
-import { getOptions, interpolateName } from 'loader-utils'
+import { interpolateName } from 'loader-utils'
 import { GetMagnetAndTorrentBuf } from './BuildMagnetAndTorrentBuf'
-import webpack from 'webpack'
+import { Options, processTorrent } from './callServer'
+// TODO: update all dependencies after getting things working
 
-interface Options {
-    baseURL: string
-    regExp: RegExp
-    rootUrl: Function
-}
+export { processTorrent }
 
 module.exports = async function loader(
-    this: webpack.loader.LoaderContext,
-    content: any,
+    this: any, // TODO: figure out what this is, find type available in webpack
+    content: (string | Blob)[],
     sourceMap: any
 ) {
-    const options = <Options>(<unknown>getOptions(this)),
-        callback = this.async()!,
-        context = this.rootContext,
+    let callback = this.async()!,
+        context = this.rootContext
+
+    let options = this.getOptions() as Options,
+        baseURL = options.baseURL,
         assetPath = interpolateName(this, '[path][name].[ext]', {
+            context,
+            content,
+            regExp: options.regExp
+        }),
+        filename = interpolateName(this, '[name].[ext]', {
             context,
             content,
             regExp: options.regExp
@@ -28,22 +32,28 @@ module.exports = async function loader(
             regExp: options.regExp
         })
 
-    let baseURL = <string>options.baseURL
     if (options.rootUrl) {
         baseURL = options.rootUrl()
     }
 
-    let seed = await GetMagnetAndTorrentBuf(
-        content,
-        assetPath,
-        torrentPath,
-        baseURL
-    )
-
-    this.emitFile(assetPath, content, sourceMap)
-    this.emitFile(torrentPath, seed.torrentBuf, null)
-
-    callback(null, `export default "${seed.magnetURI}";`)
+    if (options.ATORABLE_KEY_ID && options.ATORABLE_SECRET_KEY) {
+        let mURI = await processTorrent(content, filename, options)
+        if (mURI?.error) {
+            throw mURI.error
+        }
+        callback(null, `export default "${mURI?.magnetURI}";`)
+    } else {
+        let seed = await GetMagnetAndTorrentBuf(
+            content,
+            assetPath,
+            torrentPath,
+            baseURL
+        )
+        let magnetURI = seed.magnetURI
+        this.emitFile(assetPath, content, sourceMap)
+        this.emitFile(torrentPath, seed.torrentBuf, null)
+        callback(null, `export default "${magnetURI}";`)
+    }
 }
 
 module.exports.raw = true

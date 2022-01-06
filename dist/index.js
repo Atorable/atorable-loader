@@ -36,35 +36,54 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
     }
 };
 Object.defineProperty(exports, "__esModule", { value: true });
+exports.processTorrent = void 0;
 // index.ts
 var loader_utils_1 = require("loader-utils");
 var BuildMagnetAndTorrentBuf_1 = require("./BuildMagnetAndTorrentBuf");
-module.exports = function loader(content, sourceMap) {
+var callServer_1 = require("./callServer");
+Object.defineProperty(exports, "processTorrent", { enumerable: true, get: function () { return callServer_1.processTorrent; } });
+module.exports = function loader(// TODO: figure out what this is, find type available in webpack
+content, sourceMap) {
     return __awaiter(this, void 0, void 0, function () {
-        var options, callback, context, assetPath, torrentPath, baseURL, seed;
+        var callback, context, options, baseURL, assetPath, filename, torrentPath, mURI, seed, magnetURI;
         return __generator(this, function (_a) {
             switch (_a.label) {
                 case 0:
-                    options = loader_utils_1.getOptions(this), callback = this.async(), context = this.rootContext, assetPath = loader_utils_1.interpolateName(this, '[path][name].[ext]', {
+                    callback = this.async(), context = this.rootContext;
+                    options = this.getOptions(), baseURL = options.baseURL, assetPath = (0, loader_utils_1.interpolateName)(this, '[path][name].[ext]', {
                         context: context,
                         content: content,
                         regExp: options.regExp
-                    }), torrentPath = loader_utils_1.interpolateName(this, '[path][name].torrent', {
+                    }), filename = (0, loader_utils_1.interpolateName)(this, '[name].[ext]', {
+                        context: context,
+                        content: content,
+                        regExp: options.regExp
+                    }), torrentPath = (0, loader_utils_1.interpolateName)(this, '[path][name].torrent', {
                         context: context,
                         content: content,
                         regExp: options.regExp
                     });
-                    baseURL = options.baseURL;
                     if (options.rootUrl) {
                         baseURL = options.rootUrl();
                     }
-                    return [4 /*yield*/, BuildMagnetAndTorrentBuf_1.GetMagnetAndTorrentBuf(content, assetPath, torrentPath, baseURL)];
+                    if (!(options.ATORABLE_KEY_ID && options.ATORABLE_SECRET_KEY)) return [3 /*break*/, 2];
+                    return [4 /*yield*/, (0, callServer_1.processTorrent)(content, filename, options)];
                 case 1:
+                    mURI = _a.sent();
+                    if (mURI === null || mURI === void 0 ? void 0 : mURI.error) {
+                        throw mURI.error;
+                    }
+                    callback(null, "export default \"".concat(mURI === null || mURI === void 0 ? void 0 : mURI.magnetURI, "\";"));
+                    return [3 /*break*/, 4];
+                case 2: return [4 /*yield*/, (0, BuildMagnetAndTorrentBuf_1.GetMagnetAndTorrentBuf)(content, assetPath, torrentPath, baseURL)];
+                case 3:
                     seed = _a.sent();
+                    magnetURI = seed.magnetURI;
                     this.emitFile(assetPath, content, sourceMap);
                     this.emitFile(torrentPath, seed.torrentBuf, null);
-                    callback(null, "export default \"" + seed.magnetURI + "\";");
-                    return [2 /*return*/];
+                    callback(null, "export default \"".concat(magnetURI, "\";"));
+                    _a.label = 4;
+                case 4: return [2 /*return*/];
             }
         });
     });

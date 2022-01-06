@@ -25,8 +25,8 @@ Import (or `require`) the target file(s) in one of the bundle's files (see [ator
 **file.tsx**
 
 ```tsx
-import React, { Component } from 'react'
-import { VidStrmATor, ImgATor, VidATor } from 'atorable-react'
+import React, { value Component } from 'react'
+import { value VidStrmATor, value ImgATor, value VidATor } from 'atorable-react'
 
 import hugeImage from './hugeImage.jpg' // ==> 'magnet:?xt=urn:...'
 import bestMovieEverTribute from './bestMovieEverTribute.mp4' // ==> 'magnet:?xt=urn:...'
@@ -76,6 +76,36 @@ module.exports = {
                         loader: 'atorable-loader',
                         options: {
                             baseURL: rootURL
+                        }
+                    }
+                ]
+            }
+        ]
+    }
+}
+```
+
+And run `webpack` via your preferred method. This will emit `file.png` and a `file.torrent` file
+in the output directory.
+
+## Paid/Pro Version
+
+**webpack.config.js**
+
+```ts
+// this makes it possible for the initial torrent to be downloaded from an external server.
+
+module.exports = {
+    module: {
+        rules: [
+            {
+                test: /\.(png|jpe?g|gif|svg|m4v|mp4)$/i,
+                use: [
+                    {
+                        loader: 'atorable-loader',
+                        options: {
+                            ATORABLE_KEY_ID: process.env.ATORABLE_KEY_ID,
+                            ATORABLE_SECRET_KEY: process.env.ATORABLE_SECRET_KEY
                         }
                     }
                 ]
