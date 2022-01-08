@@ -4,7 +4,7 @@ import createTorrent from 'create-torrent'
 import path from 'path'
 
 const GetMagnetAndTorrentBuf = (
-    assetBuffer: any,
+    assetBuffer: Buffer,
     assetRelPath: string,
     torRelPath: string,
     baseURL: string
@@ -34,7 +34,7 @@ const GetMagnetAndTorrentBuf = (
     })
 }
 
-let createTorrentBuf = (assetBuffer: any, filename: string) => {
+let createTorrentBuf = (assetBuffer: Buffer, filename: string) => {
     return new Promise<{
         torrentBuf: Buffer
     }>((resolve, reject) => {
@@ -50,7 +50,7 @@ let createTorrentBuf = (assetBuffer: any, filename: string) => {
 }
 
 let buildMagnetURI = (
-    pt: any, // TODO: type this
+    pt: any, // MagnetUri.Instance | ParseTorrentFile.Instance, TODO: type this
     baseURL: string,
     assetRelPath: string,
     torRelPath: string

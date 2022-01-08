@@ -9,10 +9,11 @@ interface Options {
     rootUrl: Function
     ATORABLE_KEY_ID: string
     ATORABLE_SECRET_KEY: string
+    WEBTOR_API_URL: string
 }
 
 const processTorrent = async (
-    content: (string | Blob)[],
+    content: Buffer,
     filename: string,
     options: Options
 ) => {

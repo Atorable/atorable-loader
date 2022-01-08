@@ -2,8 +2,11 @@
 import FormData from 'form-data'
 import fetch from 'node-fetch'
 
-let baseURLUp = 'https://data.atorable.com'
-// baseURLUp = 'https://localhost:9092'
+let BaseURLUp = 'https://data.atorable.com'
+
+const setBaseURL = (baseURL: string) => {
+    BaseURLUp = baseURL
+}
 
 // TODO: consolidate api call fn
 
@@ -15,7 +18,7 @@ const checkIfHashExists = (options: {
 }) => {
     // throw new Error('Function not implemented.')
     let { url, method, body, headers } = options
-    return fetch(baseURLUp + url, {
+    return fetch(BaseURLUp + url, {
         method: method,
         // @ts-ignore
         body: body,
@@ -29,14 +32,14 @@ const checkIfHashExists = (options: {
 
 const Uploader = (
     fileName: string,
-    acceptedFiles: (string | Blob)[],
+    acceptedFiles: Buffer,
     uuid: string,
     apiKey: string,
     hash: string
 ) => {
     let formData = new FormData()
     formData.append('file', acceptedFiles, fileName)
-    return fetch(baseURLUp + '/uploader', {
+    return fetch(BaseURLUp + '/uploader', {
         method: 'POST',
         // @ts-ignore
         body: formData,
@@ -50,4 +53,4 @@ const Uploader = (
     })
 }
 
-export { Uploader, checkIfHashExists }
+export { Uploader, checkIfHashExists, setBaseURL }

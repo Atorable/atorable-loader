@@ -1,21 +1,31 @@
 // index.ts
-import { interpolateName } from 'loader-utils'
+import { interpolateName, getHashDigest } from 'loader-utils'
 import { GetMagnetAndTorrentBuf } from './BuildMagnetAndTorrentBuf'
 import { Options, processTorrent } from './callServer'
+import uuidAPIKey from 'uuid-apikey'
+import { setBaseURL } from './api'
 // TODO: update all dependencies after getting things working
+const ssbID = uuidAPIKey.create().uuid // super special build ID
+console.log('\x1b[1;32m%s\x1b[0m', ssbID) //green
 
 export { processTorrent }
 
 module.exports = async function loader(
     this: any, // TODO: figure out what this is, find type available in webpack
-    content: (string | Blob)[],
+    content: string | Buffer,
     sourceMap: any
 ) {
-    let callback = this.async()!,
+    const callback = this.async()!,
         context = this.rootContext
 
     let options = this.getOptions() as Options,
         baseURL = options.baseURL,
+        // digestString = getHashDigest(content as Buffer, 'sha1', 'hex', 0),
+        // contentHash = interpolateName(this, '[contenthash].[name]', { // TODO: for caching
+        //     context,
+        //     content,
+        //     regExp: options.regExp
+        // }),
         assetPath = interpolateName(this, '[path][name].[ext]', {
             context,
             content,
@@ -32,24 +42,30 @@ module.exports = async function loader(
             regExp: options.regExp
         })
 
+    console.log('\x1b[1;32m%s\x1b[0m', `${ssbID} ${filename}`) //green
+
     if (options.rootUrl) {
         baseURL = options.rootUrl()
     }
 
+    if (options.WEBTOR_API_URL) {
+        setBaseURL(options.WEBTOR_API_URL)
+    }
+
     if (options.ATORABLE_KEY_ID && options.ATORABLE_SECRET_KEY) {
-        let mURI = await processTorrent(content, filename, options)
+        const mURI = await processTorrent(content as Buffer, filename, options)
         if (mURI?.error) {
             throw mURI.error
         }
         callback(null, `export default "${mURI?.magnetURI}";`)
     } else {
-        let seed = await GetMagnetAndTorrentBuf(
-            content,
+        const seed = await GetMagnetAndTorrentBuf(
+            content as Buffer,
             assetPath,
             torrentPath,
             baseURL
         )
-        let magnetURI = seed.magnetURI
+        const magnetURI = seed.magnetURI
         this.emitFile(assetPath, content, sourceMap)
         this.emitFile(torrentPath, seed.torrentBuf, null)
         callback(null, `export default "${magnetURI}";`)

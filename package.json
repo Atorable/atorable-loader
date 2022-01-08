@@ -5,14 +5,21 @@
     },
     "version": "0.0.9",
     "description": "Webpack loader for turning files into Magnet links",
-    "main": "dist/index.js",
-    "types": "dist/index.d.ts",
+    "main": "lib/index.js",
+    "types": "lib/index.d.ts",
     "source": "src/index.ts",
+    "files": [
+        "lib/**/*"
+    ],
     "scripts": {
-        "test": "echo \"Error: no test specified\" && exit 1",
-        "clean-dist": "rimraf dist/*",
-        "build": "npm run clean-dist && npx tsc --project tsconfig.json",
-        "prettier-watch": "onchange \"**/*\" -- prettier --write --ignore-unknown {{changed}}"
+        "test": "echo \"Error: no test specified\" && exit 0",
+        "lint": "eslint . --ext .ts",
+        "clean-lib": "rimraf lib/*",
+        "build": "npm run clean-lib && npx tsc --project tsconfig.json",
+        "prettier-watch": "onchange \"**/*\" -- prettier --write --ignore-unknown {{changed}}",
+        "prepare": "npm run build",
+        "prepublishOnly-": "npm test && npm run lint",
+        "preversion-": "npm run lint"
     },
     "repository": {
         "type": "git",
@@ -32,7 +39,8 @@
         "form-data": "^4.0.0",
         "loader-utils": "^3.2.0",
         "node-fetch": "^2.6.6",
-        "parse-torrent": "^9.1.4"
+        "parse-torrent": "^9.1.4",
+        "uuid-apikey": "^1.5.3"
     },
     "devDependencies": {
         "@types/create-torrent": "^5.0.0",
@@ -40,7 +48,12 @@
         "@types/node": "^16.11.12",
         "@types/node-fetch": "^2.5.12",
         "@types/parse-torrent": "^5.8.4",
-        "prettier": "^2.5.1",
+        "@typescript-eslint/eslint-plugin": "^5.9.0",
+        "@typescript-eslint/parser": "^5.9.0",
+        "eslint": "^8.6.0",
+        "eslint-config-prettier": "^8.3.0",
+        "eslint-plugin-prettier": "^4.0.0",
+        "prettier": "2.5.1",
         "rimraf": "^3.0.2",
         "typescript": "^4.5.3"
     },
