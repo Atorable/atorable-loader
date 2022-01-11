@@ -15,39 +15,42 @@ interface Options {
 const processTorrent = async (
     content: Buffer,
     filename: string,
-    options: Options
+    options: Options,
+    ssbID: string
 ) => {
     try {
-        let { torrentBuf } = await createTorrentBuf(content, filename),
+        const { torrentBuf } = await createTorrentBuf(content, filename),
             pt = parseTorrent(torrentBuf),
             infoHash = pt.infoHash as string
 
-        let hashResponse = await checkIfHashExists({
+        const hashResponse = await checkIfHashExists({
             url: '/hash-check',
             method: 'POST',
             body: {},
             headers: {
                 'x-api-key': options.ATORABLE_SECRET_KEY,
-                'x-file-hash': infoHash
+                'x-file-hash': infoHash,
+                'x-ssb-id': ssbID
             }
         })
 
-        let hashResult = await hashResponse.json()
+        const hashResult = await hashResponse.json()
 
         if (!hashResult.error && !hashResult.beginUpload) {
             return { magnetURI: hashResult.magnetURI!, error: '' }
         }
 
-        let response = await Uploader(
+        const response = await Uploader(
                 filename,
                 content,
                 options.ATORABLE_KEY_ID,
                 options.ATORABLE_SECRET_KEY,
-                infoHash
+                infoHash,
+                ssbID
             ),
             // result = (await response.json()) as any
-            body = await response.text(),
-            result: any
+            body = await response.text()
+        let result: any
 
         if (body) {
             // TODO: figure out why this is necessary
@@ -70,8 +73,15 @@ const processTorrent = async (
         //     success: Boolean
         //     error: string
         // } // TODO: more type safety
-    } catch (error) {
-        console.error(error)
+    } catch (err: unknown) {
+        if (typeof err === 'string') {
+            console.trace(err)
+            console.error(err.toUpperCase()) // works, `e` narrowed to string
+        } else if (err instanceof Error) {
+            console.trace(err)
+            console.error(err.message)
+        }
+
         return { magnetURI: '', error: 'Error on server' } // TODO: improve error msg
     }
 }

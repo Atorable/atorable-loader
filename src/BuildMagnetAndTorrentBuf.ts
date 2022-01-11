@@ -14,10 +14,13 @@ const GetMagnetAndTorrentBuf = (
         torrentBuf: Buffer
         infoHash: string
     }>(async (resolve, reject) => {
-        let filename = path.parse(assetRelPath).base
+        const filename = path.parse(assetRelPath).base
 
         try {
-            let { torrentBuf } = await createTorrentBuf(assetBuffer, filename),
+            const { torrentBuf } = await createTorrentBuf(
+                    assetBuffer,
+                    filename
+                ),
                 pt = parseTorrent(torrentBuf),
                 { magnetURI } = buildMagnetURI(
                     pt,
@@ -34,7 +37,7 @@ const GetMagnetAndTorrentBuf = (
     })
 }
 
-let createTorrentBuf = (assetBuffer: Buffer, filename: string) => {
+const createTorrentBuf = (assetBuffer: Buffer, filename: string) => {
     return new Promise<{
         torrentBuf: Buffer
     }>((resolve, reject) => {
@@ -49,13 +52,13 @@ let createTorrentBuf = (assetBuffer: Buffer, filename: string) => {
     })
 }
 
-let buildMagnetURI = (
+const buildMagnetURI = (
     pt: any, // MagnetUri.Instance | ParseTorrentFile.Instance, TODO: type this
     baseURL: string,
     assetRelPath: string,
     torRelPath: string
 ) => {
-    let torrentURL = baseURL + torRelPath,
+    const torrentURL = baseURL + torRelPath,
         encode = encodeURIComponent(torrentURL),
         assetURL = baseURL + assetRelPath
 
@@ -63,7 +66,7 @@ let buildMagnetURI = (
     pt.announce = Array.from(new Set(pt.announce)) // TODO: is this needed?
     pt.urlList = Array.from(new Set(pt.urlList)) // TODO: is this needed?
 
-    let magnetURI = parseTorrent.toMagnetURI(pt) + `&xs=${encode}`
+    const magnetURI = parseTorrent.toMagnetURI(pt) + `&xs=${encode}`
 
     return { magnetURI }
 }

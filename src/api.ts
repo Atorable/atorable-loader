@@ -35,7 +35,8 @@ const Uploader = (
     acceptedFiles: Buffer,
     uuid: string,
     apiKey: string,
-    hash: string
+    hash: string,
+    ssbID: string
 ) => {
     let formData = new FormData()
     formData.append('file', acceptedFiles, fileName)
@@ -47,8 +48,8 @@ const Uploader = (
             // Accept: 'application/json',
             // 'Content-Type': 'multipart/form-data',
             'x-api-key': apiKey,
-            'x-uuid': uuid,
-            'x-file-hash': hash
+            'x-file-hash': hash,
+            'x-ssb-id': ssbID
         }
     })
 }

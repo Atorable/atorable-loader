@@ -16,10 +16,8 @@ module.exports = async function loader(
     sourceMap: any
 ) {
     const callback = this.async()!,
-        context = this.rootContext
-
-    let options = this.getOptions() as Options,
-        baseURL = options.baseURL,
+        context = this.rootContext,
+        options = this.getOptions() as Options,
         // digestString = getHashDigest(content as Buffer, 'sha1', 'hex', 0),
         // contentHash = interpolateName(this, '[contenthash].[name]', { // TODO: for caching
         //     context,
@@ -41,6 +39,7 @@ module.exports = async function loader(
             content,
             regExp: options.regExp
         })
+    let baseURL = options.baseURL
 
     console.log('\x1b[1;32m%s\x1b[0m', `${ssbID} ${filename}`) //green
 
@@ -53,7 +52,12 @@ module.exports = async function loader(
     }
 
     if (options.ATORABLE_KEY_ID && options.ATORABLE_SECRET_KEY) {
-        const mURI = await processTorrent(content as Buffer, filename, options)
+        const mURI = await processTorrent(
+            content as Buffer,
+            filename,
+            options,
+            ssbID
+        )
         if (mURI?.error) {
             throw mURI.error
         }
