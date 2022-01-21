@@ -75,7 +75,8 @@ module.exports = {
                     {
                         loader: 'atorable-loader',
                         options: {
-                            baseURL: rootURL
+                            baseURL: rootURL,
+                            showMagnetInfo: true // optional
                         }
                     }
                 ]
@@ -93,8 +94,8 @@ in the output directory.
 **webpack.config.js**
 
 ```ts
-// this makes it possible for the initial torrent to be downloaded from an external server.
-
+// this makes it possible for the initial torrent to be seeded from an external server reducing local load.
+// Message developer to purchase a paid version. Enquire about encryption.
 module.exports = {
     module: {
         rules: [
@@ -104,8 +105,9 @@ module.exports = {
                     {
                         loader: 'atorable-loader',
                         options: {
-                            ATORABLE_KEY_ID: process.env.ATORABLE_KEY_ID,
-                            ATORABLE_SECRET_KEY: process.env.ATORABLE_SECRET_KEY
+                            ATORABLE_SECRET_KEY:
+                                process.env.ATORABLE_SECRET_KEY,
+                            showMagnetInfo: true // optional,
                         }
                     }
                 ]

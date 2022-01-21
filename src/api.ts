@@ -2,10 +2,10 @@
 import FormData from 'form-data'
 import fetch from 'node-fetch'
 
-let BaseURLUp = 'https://data.atorable.com'
+let APIServerURL = 'https://data.atorable.com'
 
-const setBaseURL = (baseURL: string) => {
-    BaseURLUp = baseURL
+const setAPIServerURL = (baseURL: string) => {
+    APIServerURL = baseURL
 }
 
 // TODO: consolidate api call fn
@@ -17,10 +17,9 @@ const checkIfHashExists = (options: {
     headers: object
 }) => {
     // throw new Error('Function not implemented.')
-    let { url, method, body, headers } = options
-    return fetch(BaseURLUp + url, {
+    const { url, method, body, headers } = options
+    return fetch(APIServerURL + url, {
         method: method,
-        // @ts-ignore
         body: body,
         headers: {
             // Accept: 'application/json',
@@ -33,16 +32,14 @@ const checkIfHashExists = (options: {
 const Uploader = (
     fileName: string,
     acceptedFiles: Buffer,
-    uuid: string,
     apiKey: string,
     hash: string,
     ssbID: string
 ) => {
-    let formData = new FormData()
+    const formData = new FormData()
     formData.append('file', acceptedFiles, fileName)
-    return fetch(BaseURLUp + '/uploader', {
+    return fetch(APIServerURL + '/uploader', {
         method: 'POST',
-        // @ts-ignore
         body: formData,
         headers: {
             // Accept: 'application/json',
@@ -54,4 +51,4 @@ const Uploader = (
     })
 }
 
-export { Uploader, checkIfHashExists, setBaseURL }
+export { Uploader, checkIfHashExists, setAPIServerURL }

@@ -4,9 +4,10 @@ import { checkIfHashExists, Uploader } from './api'
 import parseTorrent from 'parse-torrent'
 // TODO: update all dependencies after getting things working
 interface Options {
+    showMagnetInfo: boolean
     baseURL: string
     regExp: RegExp
-    rootUrl: Function
+    rootUrl: () => string
     ATORABLE_KEY_ID: string
     ATORABLE_SECRET_KEY: string
     WEBTOR_API_URL: string
@@ -43,7 +44,6 @@ const processTorrent = async (
         const response = await Uploader(
                 filename,
                 content,
-                options.ATORABLE_KEY_ID,
                 options.ATORABLE_SECRET_KEY,
                 infoHash,
                 ssbID
