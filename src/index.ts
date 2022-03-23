@@ -4,6 +4,7 @@ import { GetMagnetAndTorrentBuf } from './BuildMagnetAndTorrentBuf'
 import { Options, processTorrent } from './callServer'
 import uuidAPIKey from 'uuid-apikey'
 import { setAPIServerURL } from './api'
+export const API_BUILD = 'api-build'
 // TODO: update all dependencies after getting things working
 const ssbID = uuidAPIKey.create().uuid, // super special build ID
     printBuildFileMagInfo = (
@@ -15,7 +16,7 @@ const ssbID = uuidAPIKey.create().uuid, // super special build ID
         if (showMagnetInfo) {
             console.log(
                 '\x1b[1;32m%s\x1b[0m',
-                `${ssbID} ${filename} \n\n${magnetURI}`
+                `File: ${filename} buildID:${ssbID} \n\n${magnetURI}\n`
             ) //green
         }
     }

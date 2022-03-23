@@ -2,6 +2,7 @@
 import { createTorrentBuf } from './BuildMagnetAndTorrentBuf'
 import { checkIfHashExists, Uploader } from './api'
 import parseTorrent from 'parse-torrent'
+import { API_BUILD } from '.'
 // TODO: update all dependencies after getting things working
 interface Options {
     showMagnetInfo: boolean
@@ -17,9 +18,11 @@ const processTorrent = async (
     content: Buffer,
     filename: string,
     options: Options,
-    ssbID: string
+    ssbID?: string
 ) => {
     try {
+        ssbID = ssbID || API_BUILD
+
         const { torrentBuf } = await createTorrentBuf(content, filename),
             pt = parseTorrent(torrentBuf),
             infoHash = pt.infoHash as string
@@ -35,6 +38,7 @@ const processTorrent = async (
             }
         })
 
+        // const hashResulttext = await hashResponse.text()
         const hashResult = await hashResponse.json()
 
         if (!hashResult.error && !hashResult.beginUpload) {

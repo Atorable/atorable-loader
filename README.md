@@ -1,14 +1,23 @@
-# atorable-loader
+<h1 style="color: #5270d9; font-family: 'PT Sans', sans-serif;">ATORABLE</h1>
 
 <p align="center">
-  <img src="https://github.com/Atorable/atorable-loader/blob/main/atorable.png" height="300" width="300" title="atorable logo">©
+  <img height="300" width="300" title="atorable logo" src="./atorable.svg">
 </p>
+
+# atorable-loader
+
+<!-- <p align="center">
+  <img src="https://github.com/Atorable/atorable-loader/blob/main/atorable.png" height="300" width="300" title="atorable logo">© -->
+</p>
+<!-- <p align="center">
+  <img src="./android-chrome-512x512.png" height="300" width="300" title="atorable logo">©
+</p> -->
 
 Why? Decreased data from your server.
 
 The `atorable-loader` resolves `import`/`require()` of a file into a [Webtorrent](https://webtorrent.io/) magnet uri.
 
-During the webpack build the target file is emitted along with the corresponding torrent file into the output directory. The emitted files act as the seeds for the torrent when the root url is provided to the build. This works closely with [atorable-react][atorable-react-source].
+During the webpack build the target file is emitted along with the corresponding torrent file into the output directory. The emitted files act as the seeds for the torrent when the root url is provided to the build. This works closely with [atorable-react][atorable-react-npm].
 
 #### [Demo][atorable-react]
 
@@ -20,41 +29,40 @@ To begin, you'll need to install `atorable-loader`:
 $ npm install atorable-loader --save-dev
 ```
 
-Import (or `require`) the target file(s) in one of the bundle's files (see [atorable-react][atorable-react-source]):
+Import (or `require`) the target file(s) in one of the bundle's files (see [atorable-react][atorable-react-npm]):
 
 **file.tsx**
 
 ```tsx
-import React, { value Component } from 'react'
-import { value VidStrmATor, value ImgATor, value VidATor } from 'atorable-react'
+import React from 'react'
+import { VidStrmATor, ImgATor, VidATor } from 'atorable-react'
 
 import hugeImage from './hugeImage.jpg' // ==> 'magnet:?xt=urn:...'
 import bestMovieEverTribute from './bestMovieEverTribute.mp4' // ==> 'magnet:?xt=urn:...'
-const oceanFish = require('./oceanFish.m4v') // ==> {default: 'magnet:?xt=urn:...'}
+const oceanFish = require('./oceanFish.mp4') // ==> {default: 'magnet:?xt=urn:...'}
 
-class Example extends Component {
-    render() {
-        return (
-            <div>
-                <VidATor
-                    width='320'
-                    height='240'
-                    type={'m4v'}
-                    magnetLink={oceanFish}
-                />
+const Example = (props: any) => {
+    return (
+        <div>
+            <VidATor
+                width={320}
+                height={240}
+                type={'video/mp4'}
+                magnetURI={oceanFish}
+                loading={<h2 style={{ color: 'orange' }}>Loading</h2>}
+            />
 
-                <VidStrmATor
-                    width='320'
-                    height='240'
-                    type={'mp4'}
-                    autoplay={true}
-                    magnetLink={bestMovieEverTribute}
-                />
+            <VidStrmATor
+                width={320}
+                height={240}
+                type={'video/mp4'}
+                autoplay={true}
+                magnetURI={bestMovieEverTribute}
+            />
 
-                <ImgATor magnetLink={hugeImage} style={{ border: 'solid' }} />
-            </div>
-        )
-    }
+            <ImgATor magnetURI={hugeImage} style={{ border: 'solid' }} />
+        </div>
+    )
 }
 ```
 
@@ -89,7 +97,7 @@ module.exports = {
 And run `webpack` via your preferred method. This will emit `file.png` and a `file.torrent` file
 in the output directory.
 
-## Paid/Pro Version
+## Paid/Pro Version (Trial)
 
 **webpack.config.js**
 
@@ -208,3 +216,4 @@ module.exports = {
 
 [atorable-react]: https://atorable.github.io/atorable-react/
 [atorable-react-source]: https://github.com/Atorable/atorable-react
+[atorable-react-npm]: https://www.npmjs.com/package/atorable-react
