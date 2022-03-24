@@ -1,13 +1,13 @@
 // index.ts
 import { interpolateName } from 'loader-utils'
 import { GetMagnetAndTorrentBuf } from './BuildMagnetAndTorrentBuf'
-import { Options as options, processTorrent } from './callServer'
+import { Options, processTorrent } from './callServer'
 import uuidAPIKey from 'uuid-apikey'
 import { setAPIServerURL } from './api'
 export const API_BUILD = 'api-build'
 export const ProcessTorrent = processTorrent
 export const SetAPIServerURL = setAPIServerURL
-export type Options = options
+export { Options }
 // TODO: update all dependencies after getting things working
 const ssbID = uuidAPIKey.create().uuid, // super special build ID
     printBuildFileMagInfo = (
