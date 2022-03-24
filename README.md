@@ -13,7 +13,7 @@
   <img src="./android-chrome-512x512.png" height="300" width="300" title="atorable logo">©
 </p> -->
 
-Why? Decreased data from your server.
+Why? Decreased data from your server. Large files faster with more peers. More Decentralized.
 
 The `atorable-loader` resolves `import`/`require()` of a file into a [Webtorrent](https://webtorrent.io/) magnet uri.
 
@@ -94,16 +94,16 @@ module.exports = {
 }
 ```
 
-And run `webpack` via your preferred method. This will emit `file.png` and a `file.torrent` file
+And run `webpack` via your preferred method. This will emit `file.*` and a `file.torrent` file
 in the output directory.
 
 ## Paid/Pro Version (Trial)
 
+This makes it possible for the initial torrent to be seeded from an external server reducing local load and potentially faster large file downloads.
+
 **webpack.config.js**
 
 ```ts
-// this makes it possible for the initial torrent to be seeded from an external server reducing local load.
-// Message developer to purchase a paid version. Enquire about encryption.
 module.exports = {
     module: {
         rules: [
@@ -125,8 +125,7 @@ module.exports = {
 }
 ```
 
-And run `webpack` via your preferred method. This will emit `file.png` and a `file.torrent` file
-in the output directory.
+And run `webpack` via your preferred method. This will emit two files for each asset `originalFile.*` and a `originalFile.torrent` and send these files to an external server.
 
 ## Options
 
