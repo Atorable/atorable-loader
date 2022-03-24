@@ -5,6 +5,8 @@ import { Options, processTorrent } from './callServer'
 import uuidAPIKey from 'uuid-apikey'
 import { setAPIServerURL } from './api'
 export const API_BUILD = 'api-build'
+export const ProcessTorrent = processTorrent
+export const SetAPIServerURL = setAPIServerURL
 // TODO: update all dependencies after getting things working
 const ssbID = uuidAPIKey.create().uuid, // super special build ID
     printBuildFileMagInfo = (
