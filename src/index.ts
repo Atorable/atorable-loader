@@ -1,13 +1,11 @@
 // index.ts
 import { interpolateName } from 'loader-utils'
 import { GetMagnetAndTorrentBuf } from './BuildMagnetAndTorrentBuf'
-import { Options, processTorrent } from './callServer'
+import { Options, processTorrent as ProcessTorrent } from './callServer'
 import uuidAPIKey from 'uuid-apikey'
-import { setAPIServerURL } from './api'
+import { setAPIServerURL as SetAPIServerURL } from './api'
 export const API_BUILD = 'api-build'
-export const ProcessTorrent = processTorrent
-export const SetAPIServerURL = setAPIServerURL
-export { Options }
+export { Options, ProcessTorrent, SetAPIServerURL }
 // TODO: update all dependencies after getting things working
 const ssbID = uuidAPIKey.create().uuid, // super special build ID
     printBuildFileMagInfo = (
@@ -22,7 +20,9 @@ const ssbID = uuidAPIKey.create().uuid, // super special build ID
                 `File: ${filename} buildID:${ssbID} \n\n${magnetURI}\n`
             ) //green
         }
-    }
+    },
+    updatePlan = 'https://www.atorable.com/services'
+
 module.exports = async function loader(
     this: any, // TODO: figure out what this is, find type available in webpack
     content: string | Buffer,
@@ -55,18 +55,23 @@ module.exports = async function loader(
 
     if (opts.ATORABLE_SECRET_KEY) {
         if (opts.WEBTOR_API_URL) {
-            setAPIServerURL(opts.WEBTOR_API_URL)
+            SetAPIServerURL(opts.WEBTOR_API_URL)
         }
 
-        const mURI = await processTorrent(
+        const mURI = await ProcessTorrent(
             content as Buffer,
             filename,
             opts,
             ssbID
         )
-        if (mURI?.error) {
-            throw mURI.error
-        }
+
+        if (mURI?.error)
+            return callback(
+                mURI.error +
+                    `\nCannot build magnet URI\n` +
+                    `Update Plan: \x1b[1;34m${updatePlan}\x1b[0m\n`
+            ) //blue
+
         printBuildFileMagInfo(
             ssbID,
             filename,

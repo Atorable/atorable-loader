@@ -38,14 +38,19 @@ const Uploader = (
 ) => {
     const formData = new FormData()
     formData.append('file', acceptedFiles, fileName)
+    const fileSize = Buffer.byteLength(acceptedFiles) * 1e-6
+
     return fetch(APIServerURL + '/uploader', {
         method: 'POST',
         body: formData,
+        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+        // @ts-ignore
         headers: {
             // Accept: 'application/json',
             // 'Content-Type': 'multipart/form-data',
             'x-api-key': apiKey,
             'x-file-hash': hash,
+            'x-file-size': fileSize,
             'x-ssb-id': ssbID
         }
     })

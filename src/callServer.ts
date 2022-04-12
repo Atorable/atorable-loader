@@ -25,7 +25,8 @@ const processTorrent = async (
 
         const { torrentBuf } = await createTorrentBuf(content, filename),
             pt = parseTorrent(torrentBuf),
-            infoHash = pt.infoHash as string
+            infoHash = pt.infoHash as string,
+            fileSize = Buffer.byteLength(content) * 1e-6
 
         const hashResponse = await checkIfHashExists({
             url: '/hash-check',
@@ -34,6 +35,7 @@ const processTorrent = async (
             headers: {
                 'x-api-key': options.ATORABLE_SECRET_KEY,
                 'x-file-hash': infoHash,
+                'x-file-size': fileSize,
                 'x-ssb-id': ssbID
             }
         })
