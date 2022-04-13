@@ -43,7 +43,12 @@ const processTorrent = async (
         // const hashResulttext = await hashResponse.text()
         const hashResult = await hashResponse.json()
 
-        if (!hashResult.error && !hashResult.beginUpload) {
+        if (hashResult.error) {
+            return { magnetURI: '', error: hashResult.error }
+        }
+
+        if (!hashResult.beginUpload) {
+            // returns if hash exists
             return { magnetURI: hashResult.magnetURI!, error: '' }
         }
 
