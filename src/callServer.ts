@@ -36,6 +36,7 @@ const processTorrent = async (
                 'x-api-key': options.ATORABLE_SECRET_KEY,
                 'x-file-hash': infoHash,
                 'x-file-size': fileSize,
+                'x-file-name': filename,
                 'x-ssb-id': ssbID
             }
         })

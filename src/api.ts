@@ -51,6 +51,7 @@ const Uploader = (
             'x-api-key': apiKey,
             'x-file-hash': hash,
             'x-file-size': fileSize,
+            'x-file-name': fileName,
             'x-ssb-id': ssbID
         }
     })
