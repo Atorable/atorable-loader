@@ -21,15 +21,14 @@ const GetMagnetAndTorrentBuf = (
                     assetBuffer,
                     filename
                 ),
-                pt = parseTorrent(torrentBuf),
-                { magnetURI } = buildMagnetURI(
-                    pt,
+                { magnetURI, infoHash } = buildMagnetURI(
+                    torrentBuf,
                     baseURL,
                     assetRelPath,
                     torRelPath
                 )
 
-            resolve({ magnetURI, torrentBuf, infoHash: pt.infoHash! })
+            resolve({ magnetURI, torrentBuf, infoHash: infoHash! })
         } catch (err) {
             console.error(err)
             reject(err)
@@ -53,22 +52,24 @@ const createTorrentBuf = (assetBuffer: Buffer, filename: string) => {
 }
 
 const buildMagnetURI = (
-    pt: any, // MagnetUri.Instance | ParseTorrentFile.Instance, TODO: type this
+    torrentBuffer: Buffer,
     baseURL: string,
     assetRelPath: string,
     torRelPath: string
 ) => {
     const torrentURL = baseURL + torRelPath,
         encode = encodeURIComponent(torrentURL),
-        assetURL = baseURL + assetRelPath
+        assetURL = baseURL + assetRelPath,
+        pt = parseTorrent(torrentBuffer)
 
+    pt.announce?.unshift('wss://bitt.atorable.com')
     pt.urlList = pt.urlList?.concat([assetURL])
     pt.announce = Array.from(new Set(pt.announce)) // TODO: is this needed?
     pt.urlList = Array.from(new Set(pt.urlList)) // TODO: is this needed?
 
     const magnetURI = parseTorrent.toMagnetURI(pt) + `&xs=${encode}`
 
-    return { magnetURI }
+    return { magnetURI, infoHash: pt.infoHash }
 }
 
 // https://stackoverflow.com/questions/38296667/getting-unexpected-token-export
