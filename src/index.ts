@@ -1,29 +1,22 @@
 // index.ts
 import { interpolateName } from 'loader-utils'
-import { GetMagnetAndTorrentBuf } from './BuildMagnetAndTorrentBuf'
 import { Options, processTorrent as ProcessTorrent } from './callServer'
 import uuidAPIKey from 'uuid-apikey'
 import { setAPIServerURL as SetAPIServerURL } from './api'
-export const API_BUILD = 'api-build'
-export { Options, ProcessTorrent, SetAPIServerURL, GetMagnetAndTorrentBuf }
+import { GetMagnetAndTorrentBuf } from './BuildMagnetAndTorrentBuf'
+import { printBuildFileMagInfo } from './printBuildFileMagInfo'
+
 // TODO: update all dependencies after getting things working
 const ssbID = uuidAPIKey.create().uuid, // super special build ID
-    printBuildFileMagInfo = (
-        ssbID: string,
-        filename: string,
-        magnetURI: string,
-        showMagnetInfo: boolean
-    ) => {
-        if (showMagnetInfo) {
-            console.log(
-                '\x1b[1;32m%s\x1b[0m',
-                `File: ${filename} buildID:${ssbID} \n\n${magnetURI}\n`
-            ) //green
-        }
-    },
     updatePlan = 'https://www.atorable.com/services'
 
-module.exports = async function loader(
+export const API_BUILD = 'api-build'
+export { GetMagnetAndTorrentBuf } from './BuildMagnetAndTorrentBuf'
+export { Options, processTorrent as ProcessTorrent } from './callServer'
+export { setAPIServerURL as SetAPIServerURL } from './api'
+export const raw = true
+
+export default async function loader(
     this: any, // TODO: figure out what this is, find type available in webpack
     content: string | Buffer,
     sourceMap: any
@@ -104,5 +97,3 @@ module.exports = async function loader(
         callback(null, `export default "${magnetURI}";`)
     }
 }
-
-module.exports.raw = true
