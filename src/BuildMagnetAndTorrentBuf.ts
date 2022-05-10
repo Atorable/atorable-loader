@@ -62,7 +62,9 @@ const buildMagnetURI = (
         assetURL = baseURL + assetRelPath,
         pt = parseTorrent(torrentBuffer)
 
-    pt.announce?.unshift('wss://bitt.atorable.com')
+    pt.announce?.unshift('wss://bitt.atorable.com') // TODO: manage atorable trackers better
+    pt.announce?.unshift('wss://devbitt.atorable.com')
+
     pt.urlList = pt.urlList?.concat([assetURL])
     pt.announce = Array.from(new Set(pt.announce)) // TODO: is this needed?
     pt.urlList = Array.from(new Set(pt.urlList)) // TODO: is this needed?
