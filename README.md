@@ -79,6 +79,7 @@ module.exports = {
         rules: [
             {
                 test: /\.(png|jpe?g|gif|svg|m4v|mp4)$/i,
+                //   test: /src[\\\/]assets[\\\/]Needle\.jpg$/, // for targeting a specific file
                 use: [
                     {
                         loader: 'atorable-loader',
@@ -116,6 +117,7 @@ module.exports = {
                             ATORABLE_SECRET_KEY:
                                 process.env.ATORABLE_SECRET_KEY,
                             showMagnetInfo: true // optional,
+                            PRODUCTION: true // optional default: false,
                         }
                     }
                 ]

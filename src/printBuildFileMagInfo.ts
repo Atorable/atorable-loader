@@ -2,7 +2,7 @@ export const printBuildFileMagInfo = (
     ssbID: string,
     filename: string,
     magnetURI: string,
-    showMagnetInfo: boolean
+    showMagnetInfo: boolean | undefined
 ) => {
     if (showMagnetInfo) {
         console.log(

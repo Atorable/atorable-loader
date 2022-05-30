@@ -5,13 +5,14 @@ import parseTorrent from 'parse-torrent'
 import { API_BUILD } from '.'
 // TODO: update all dependencies after getting things working
 interface Options {
-    showMagnetInfo: boolean
-    baseURL: string
-    regExp: RegExp
-    rootUrl: () => string
-    ATORABLE_KEY_ID: string
-    ATORABLE_SECRET_KEY: string
-    WEBTOR_API_URL: string
+    showMagnetInfo?: boolean
+    baseURL?: string
+    regExp?: RegExp
+    rootUrl?: () => string
+    ATORABLE_KEY_ID?: string
+    ATORABLE_SECRET_KEY?: string
+    WEBTOR_API_URL?: string
+    PRODUCTION?: boolean
 }
 
 const processTorrent = async (
@@ -23,23 +24,19 @@ const processTorrent = async (
     try {
         ssbID = ssbID || API_BUILD
 
-        const { torrentBuf } = await createTorrentBuf(content, filename),
+        const { ATORABLE_SECRET_KEY } = options,
+            { torrentBuf } = await createTorrentBuf(content, filename),
             pt = parseTorrent(torrentBuf),
             infoHash = pt.infoHash as string,
-            fileSize = Buffer.byteLength(content) * 1e-6
+            fileSize = (Buffer.byteLength(content) * 1e-6).toString()
 
-        const hashResponse = await checkIfHashExists({
-            url: '/hash-check',
-            method: 'POST',
-            body: {},
-            headers: {
-                'x-api-key': options.ATORABLE_SECRET_KEY,
-                'x-file-hash': infoHash,
-                'x-file-size': fileSize,
-                'x-file-name': filename,
-                'x-ssb-id': ssbID
-            }
-        })
+        const hashResponse = await checkIfHashExists(
+            ATORABLE_SECRET_KEY as string,
+            infoHash,
+            fileSize,
+            filename,
+            ssbID
+        )
 
         // const hashResulttext = await hashResponse.text()
         const hashResult = await hashResponse.json()
@@ -56,7 +53,7 @@ const processTorrent = async (
         const response = await Uploader(
                 filename,
                 content,
-                options.ATORABLE_SECRET_KEY,
+                ATORABLE_SECRET_KEY as string,
                 infoHash,
                 ssbID
             ),

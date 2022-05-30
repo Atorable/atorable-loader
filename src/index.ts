@@ -2,7 +2,7 @@
 import { interpolateName } from 'loader-utils'
 import { Options, processTorrent as ProcessTorrent } from './callServer'
 import uuidAPIKey from 'uuid-apikey'
-import { setAPIServerURL as SetAPIServerURL } from './api'
+import { setAPIServerURL as SetAPIServerURL, setPROD } from './api'
 import { GetMagnetAndTorrentBuf } from './BuildMagnetAndTorrentBuf'
 import { printBuildFileMagInfo } from './printBuildFileMagInfo'
 
@@ -47,9 +47,8 @@ export default async function loader(
         })
 
     if (opts.ATORABLE_SECRET_KEY) {
-        if (opts.WEBTOR_API_URL) {
-            SetAPIServerURL(opts.WEBTOR_API_URL)
-        }
+        if (opts.WEBTOR_API_URL) SetAPIServerURL(opts.WEBTOR_API_URL)
+        if (opts.PRODUCTION) setPROD(opts.PRODUCTION)
 
         const mURI = await ProcessTorrent(
             content as Buffer,
