@@ -3,6 +3,12 @@ import parseTorrent from 'parse-torrent'
 import createTorrent from 'create-torrent'
 import path from 'path'
 
+let devAnnounceURL = ''
+
+const SetDevAnnounceURL = (url: string) => {
+    devAnnounceURL = url
+}
+
 const GetMagnetAndTorrentBuf = (
     assetBuffer: Buffer,
     assetRelPath: string,
@@ -63,7 +69,7 @@ const buildMagnetURI = (
         pt = parseTorrent(torrentBuffer)
 
     pt.announce?.unshift('wss://bitt.atorable.com') // TODO: manage atorable trackers better
-    pt.announce?.unshift('wss://devbitt.atorable.com')
+    if (devAnnounceURL) pt.announce?.unshift(devAnnounceURL)
 
     pt.urlList = pt.urlList?.concat([assetURL])
     pt.announce = Array.from(new Set(pt.announce)) // TODO: is this needed?
@@ -75,4 +81,4 @@ const buildMagnetURI = (
 }
 
 // https://stackoverflow.com/questions/38296667/getting-unexpected-token-export
-export { GetMagnetAndTorrentBuf, createTorrentBuf }
+export { GetMagnetAndTorrentBuf, createTorrentBuf, SetDevAnnounceURL }

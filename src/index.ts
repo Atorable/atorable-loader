@@ -59,8 +59,8 @@ export default async function loader(
 
         if (mURI?.error)
             return callback(
-                mURI.error +
-                    `\nCannot build magnet URI\n` +
+                mURI.error.message +
+                    `\n${mURI.error.message}\nCannot build magnet URI\n` +
                     `Update Plan: \x1b[1;34m${updatePlan}\x1b[0m\n`
             ) //blue
 
