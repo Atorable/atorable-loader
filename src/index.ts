@@ -57,12 +57,13 @@ export default async function loader(
             ssbID
         )
 
-        if (mURI?.error)
-            return callback(
+        if (mURI?.error) {
+            const err = new Error(
                 `\n${mURI.error}\nCannot build magnet URI\n` +
                     `Update Plan: \x1b[1;34m${updatePlan}\x1b[0m\n`
-            ) //blue
-
+            )
+            return callback(err) //blue
+        }
         printBuildFileMagInfo(
             ssbID,
             filename,
@@ -70,6 +71,7 @@ export default async function loader(
             opts.showMagnetInfo
         )
         callback(null, `export default "${mURI?.magnetURI}";`)
+        return
     } else {
         let baseURL = opts.baseURL
 
@@ -78,9 +80,12 @@ export default async function loader(
         }
 
         if (!baseURL) {
-            throw new Error(
-                'You must provide a baseURL or rootUrl Function. See readme.'
+            callback(
+                new Error(
+                    'You must provide a baseURL or rootUrl Function. See readme.'
+                )
             )
+            return
         }
         const seed = await GetMagnetAndTorrentBuf(
             content as Buffer,
