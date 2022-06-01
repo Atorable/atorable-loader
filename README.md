@@ -13,11 +13,11 @@
   <img src="./android-chrome-512x512.png" height="300" width="300" title="atorable logo">©
 </p> -->
 
-Why? Decreased data from your server. Large files faster with more peers. More Decentralized.
+Why? Decreased data from your server or our server, see our services [Atorable.com](https://www.atorable.com/). Large files faster with more peers. More Decentralized.
 
 The `atorable-loader` resolves `import`/`require()` of a file into a [Webtorrent](https://webtorrent.io/) magnet uri.
 
-During the webpack build the target file is emitted along with the corresponding torrent file into the output directory. The emitted files act as the seeds for the torrent when the root url is provided to the build. This works closely with [atorable-react][atorable-react-npm].
+During the webpack build the target file is emitted along with the corresponding torrent file into the output directory. The emitted files act as the seeds for the torrent when the root url is provided to the build. [Atorable.com](https://www.atorable.com/) offers a paid version that stores files remotely to decrease load on your main server. This works closely with [atorable-react][atorable-react-npm].
 
 #### [Demo][atorable-react]
 
