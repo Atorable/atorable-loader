@@ -7,7 +7,4 @@ deploy:
     stage: deploy
     script:
         - npm install rimraf
-        - echo "@atorable-loader:registry=https://${CI_SERVER_HOST}/api/v4/packages/npm/">.npmrc
-        - echo "//${CI_SERVER_HOST}/api/v4/packages/npm/:_authToken=${CI_JOB_TOKEN}" >> .npmrc
-        - echo "//registry.npmjs.org/:_authToken=dummy" >> .npmrc
-        - npm publish --registry=https://${CI_SERVER_HOST}/api/v4/packages/npm/
+        - GITLAB_AUTH_TOKEN="${CI_JOB_TOKEN}" npm publish

@@ -1,5 +1,8 @@
 {
-    "name": "atorable-loader",
+    "name": "@atorable/atorable-loader",
+    "publishConfig": {
+        "@atorable:registry": "https://gitlab.com/api/v4/projects/34050887/packages/npm/"
+    },
     "version": "0.1.0",
     "description": "Webpack loader for turning files into Magnet links",
     "main": "lib/index.js",
