@@ -5,6 +5,7 @@ import parseTorrent from 'parse-torrent'
 import { API_BUILD } from '.'
 // TODO: update all dependencies after getting things working
 interface Options {
+    DEV_ANNOUNCE_URL: string
     showMagnetInfo?: boolean
     baseURL?: string
     regExp?: RegExp
