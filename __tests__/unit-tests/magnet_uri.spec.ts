@@ -1,4 +1,5 @@
 import { describe, beforeAll, expect, afterAll, it } from '@jest/globals'
+import path from 'path'
 import { GetMagnetAndTorrentBuf } from '../../src/BuildMagnetAndTorrentBuf'
 
 describe('status integration tests', () => {
@@ -6,8 +7,11 @@ describe('status integration tests', () => {
 
     it('can make a magnetURI', async () => {
         const relPath = 'upload/test-file-1.txt',
+            patt1 = /\.[0-9a-z]+$/i,
+            interend = patt1.exec(relPath)!,
             regex = /.*(?=\.)/gim,
-            torrentName = regex.exec(relPath)![0] + '.torrent' // TODO find all ! and deal
+            inter = regex.exec(relPath)!,
+            torrentName = inter[0] + '.torrent' // TODO find all ! and deal
         const { magnetURI, torrentBuf, infoHash } =
             await GetMagnetAndTorrentBuf(
                 new Buffer('test'),

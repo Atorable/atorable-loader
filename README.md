@@ -1,7 +1,7 @@
 <h1 style="color: #5270d9; font-family: 'PT Sans', sans-serif;">ATORABLE</h1>
 
 <p align="center">
-  <img height="300" width="300" title="atorable logo" src="./atorable.svg">
+  <img height="300" width="300" title="atorable logo" src="https://github.com/Atorable/atorable-loader/raw/main/atorable.svg">
 </p>
 
 # atorable-loader
@@ -13,11 +13,11 @@
   <img src="./android-chrome-512x512.png" height="300" width="300" title="atorable logo">©
 </p> -->
 
-Why? Decreased data from your server or our server, see our services [Atorable.com](https://www.atorable.com/). Large files faster with more peers. More Decentralized.
+High data costs? Slow PageSpeed? High server load? Need a solution for viral content? [Atorable.com](https://www.atorable.com/) serve content better.
 
-The `atorable-loader` resolves `import`/`require()` of a file into a [Webtorrent](https://webtorrent.io/) magnet uri.
+As more users visit your site the more users serve up your content. More users makes faster downloads, less server load, lower data costs, more decentralized. PageSpeed will also increases by not blocking page load. Designed for use with [Webpack][webpack] and [atorable-react][atorable-react-npm].
 
-During the webpack build the target file is emitted along with the corresponding torrent file into the output directory. The emitted files act as the seeds for the torrent when the root url is provided to the build. [Atorable.com](https://www.atorable.com/) offers a paid version that stores files remotely to decrease load on your main server. This works closely with [atorable-react][atorable-react-npm].
+The `atorable-loader` resolves `import`/`require()` of a file into a [Webtorrent](https://webtorrent.io/) magnet uri. During the webpack build the target file is emitted along with the corresponding torrent file into the output directory. The emitted files act as the seeds for the torrent when the root url is provided to the build. [Atorable.com](https://www.atorable.com/) offers a paid plans that integrates easily with your build to further decrease your server load. [Contact us][contact] for custom solutions.
 
 #### [Demo][atorable-react]
 
@@ -35,7 +35,7 @@ Import (or `require`) the target file(s) in one of the bundle's files (see [ator
 
 ```tsx
 import React from 'react'
-import { VidStrmATor, ImgATor, VidATor } from 'atorable-react'
+import { ATorVidStrm, ATorImg, ATorVid } from 'atorable-react'
 
 import hugeImage from './hugeImage.jpg' // ==> 'magnet:?xt=urn:...'
 import bestMovieEverTribute from './bestMovieEverTribute.mp4' // ==> 'magnet:?xt=urn:...'
@@ -44,23 +44,23 @@ const oceanFish = require('./oceanFish.mp4') // ==> {default: 'magnet:?xt=urn:..
 const Example = (props: any) => {
     return (
         <div>
-            <VidATor
-                width={320}
-                height={240}
+            <ATorVid
+                width={'320'}
+                height={'240'}
                 type={'video/mp4'}
                 magnetURI={oceanFish}
-                loading={<h2 style={{ color: 'orange' }}>Loading</h2>}
+                loading={<h2 style={{ color: 'orange' }}>Loading</h2>} // optional
             />
 
-            <VidStrmATor
-                width={320}
-                height={240}
+            <ATorVidStrm
+                width={'320'}
+                height={'240'}
                 type={'video/mp4'}
                 autoplay={true}
                 magnetURI={bestMovieEverTribute}
             />
 
-            <ImgATor magnetURI={hugeImage} style={{ border: 'solid' }} />
+            <ATorImg magnetURI={hugeImage} style={{ border: 'solid' }} />
         </div>
     )
 }
@@ -72,7 +72,7 @@ Then add the loader to your `webpack` config. For example:
 
 ```js
 const rootURL = 'http://localhost:8080/' // Define your root url http://example.com/
-// this makes it possible for the initial torrent to be downloaded.
+// this makes it possible for the initial torrent to be downloaded ending slash / is important.
 
 module.exports = {
     module: {
@@ -98,9 +98,9 @@ module.exports = {
 And run `webpack` via your preferred method. This will emit `file.*` and a `file.torrent` file
 in the output directory.
 
-## Paid/Pro Version (Trial)
+## Paid/Pro Version
 
-This makes it possible for the initial torrent to be seeded from an external server reducing local load and potentially faster large file downloads.
+This makes it possible for the initial torrent to be seeded from an external server reducing local load, improving PageSpeed and faster high demand downloads.
 
 **webpack.config.js**
 
@@ -115,9 +115,10 @@ module.exports = {
                         loader: 'atorable-loader',
                         options: {
                             ATORABLE_SECRET_KEY:
-                                process.env.ATORABLE_SECRET_KEY,
-                            showMagnetInfo: true // optional,
-                            PRODUCTION: true // optional default: false,
+                                process.env.ATORABLE_SECRET_KEY, // access token from atorable.com
+                            showMagnetInfo: true, // optional
+                            PRODUCTION: true // optional default: false
+                            // if true, this will only update production build files
                         }
                     }
                 ]
@@ -127,7 +128,7 @@ module.exports = {
 }
 ```
 
-And run `webpack` via your preferred method. This will emit two files for each asset `originalFile.*` and a `originalFile.torrent` and send these files to an external server.
+When you run `webpack` the [Atorable.com](https://www.atorable.com/) API will send relevant files to an external server and return magnetURIs.
 
 ## Options
 
@@ -218,3 +219,5 @@ module.exports = {
 [atorable-react]: https://atorable.github.io/atorable-react/
 [atorable-react-source]: https://github.com/Atorable/atorable-react
 [atorable-react-npm]: https://www.npmjs.com/package/atorable-react
+[webpack]: https://webpack.js.org/
+[contact]: https://www.atorable.com/contact
