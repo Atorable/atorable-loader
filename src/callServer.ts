@@ -1,6 +1,6 @@
 // callServer.ts
 import { createTorrentBuf } from './BuildMagnetAndTorrentBuf'
-import { checkIfHashExists, Uploader } from './api'
+import { checkIfHashExists, setAPIServerURL, setPROD, Uploader } from './api'
 import parseTorrent from 'parse-torrent'
 import { API_BUILD } from '.'
 // TODO: update all dependencies after getting things working
@@ -22,6 +22,9 @@ const processTorrent = async (
     options: Options,
     ssbID?: string
 ) => {
+    if (options.PRODUCTION) setPROD(options.PRODUCTION)
+    if (options.WEBTOR_API_URL) setAPIServerURL(options.WEBTOR_API_URL)
+
     try {
         ssbID = ssbID || API_BUILD
 
