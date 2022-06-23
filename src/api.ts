@@ -45,7 +45,7 @@ const Uploader = (
 ) => {
     const formData = new FormData()
     formData.append('file', acceptedFiles, fileName)
-    const fileSize = Buffer.byteLength(acceptedFiles) * 1e-6
+    const fileSize = (Buffer.byteLength(acceptedFiles) * 1e-6).toString()
 
     return fetch(APIServerURL + '/uploader', {
         method: 'POST',

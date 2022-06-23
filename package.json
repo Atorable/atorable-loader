@@ -35,7 +35,7 @@
         "loader"
     ],
     "dependencies": {
-        "create-torrent": "^5.0.1",
+        "create-torrent": "^5.0.2",
         "form-data": "^4.0.0",
         "loader-utils": "^3.2.0",
         "node-fetch": "^2.6.6",

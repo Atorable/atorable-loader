@@ -16,6 +16,12 @@ interface Options {
     PRODUCTION?: boolean
 }
 
+interface HashRes {
+    error: string
+    magnetURI: string
+    beginUpload: boolean
+}
+
 const processTorrent = async (
     content: Buffer,
     filename: string,
@@ -43,7 +49,8 @@ const processTorrent = async (
         )
 
         // const hashResulttext = await hashResponse.text()
-        const hashResult = await hashResponse.json()
+        const res = await hashResponse.json()
+        const hashResult = res as HashRes
 
         if (hashResult.error) {
             return { magnetURI: '', error: hashResult.error }
@@ -51,7 +58,7 @@ const processTorrent = async (
 
         if (!hashResult.beginUpload) {
             // returns if hash exists
-            return { magnetURI: hashResult.magnetURI!, error: '' }
+            return { magnetURI: hashResult.magnetURI, error: '' }
         }
 
         const response = await Uploader(
