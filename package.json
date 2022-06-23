@@ -1,9 +1,6 @@
 {
-    "name": "@atorable/atorable-loader",
-    "publishConfig": {
-        "@atorable:registry": "https://gitlab.com/api/v4/projects/34067611/packages/npm/"
-    },
-    "version": "0.1.4",
+    "name": "atorable-loader",
+    "version": "0.1.5",
     "description": "Webpack loader for turning files into Magnet links",
     "main": "lib/index.js",
     "types": "lib/index.d.ts",
@@ -67,6 +64,10 @@
     },
     "license": "ISC",
     "funding": [
+        {
+            "type": "github",
+            "url": "https://github.com/sponsors/atorable"
+        },
         {
             "type": "github",
             "url": "https://github.com/sponsors/sergethompson"
