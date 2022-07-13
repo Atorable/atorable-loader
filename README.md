@@ -13,7 +13,7 @@
   <img src="./android-chrome-512x512.png" height="300" width="300" title="atorable logo">©
 </p> -->
 
-High data costs? Slow PageSpeed? High server load? Need a solution for viral content? [Atorable.com](https://www.atorable.com/) serve content better.
+High data costs? Slow PageSpeed? High server load? Need a solution for viral content? [Atorable.com](https://www.atorable.com/) moves more content faster.
 
 As more users visit your site the more users serve up your content. More users makes faster downloads, less server load, lower data costs, more decentralized. PageSpeed will also increases by not blocking page load. Designed for use with [Webpack][webpack] and [atorable-react][atorable-react-npm].
 
@@ -51,7 +51,6 @@ const Example = (props: any) => {
                 magnetURI={oceanFish}
                 loading={<h2 style={{ color: 'orange' }}>Loading</h2>} // optional
             />
-
             <ATorVidStrm
                 width={'320'}
                 height={'240'}
@@ -59,7 +58,14 @@ const Example = (props: any) => {
                 autoplay={true}
                 magnetURI={bestMovieEverTribute}
             />
-
+            <ATorStreamVideo
+                aspectRatio={3 / 4}
+                type={'video/mp4'}
+                magnetURI={bestMovieEverTribute}
+                autoplay={true}
+            />
+            // aspectRatio={height / width} aspectRatio works best for responsive
+            videos
             <ATorImg magnetURI={hugeImage} style={{ border: 'solid' }} />
         </div>
     )

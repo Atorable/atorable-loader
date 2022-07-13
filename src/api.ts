@@ -2,7 +2,7 @@
 import FormData from 'form-data'
 import fetch from 'node-fetch'
 
-let APIServerURL = 'https://data.atorable.com'
+let APIServerURL = 'http://data.atorable.com'
 let PRODUCTION = false
 
 const setAPIServerURL = (baseURL: string) => {
