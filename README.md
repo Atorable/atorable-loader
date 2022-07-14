@@ -13,7 +13,7 @@
   <img src="./android-chrome-512x512.png" height="300" width="300" title="atorable logo">©
 </p> -->
 
-High data costs? Slow PageSpeed? High server load? Need a solution for viral content? [Atorable.com](https://www.atorable.com/) moves more content faster.
+High data costs? Slow PageSpeed? High server load? Need a solution for viral content? [Atorable.com](https://www.atorable.com/) moves more content.
 
 As more users visit your site the more users serve up your content. More users makes faster downloads, less server load, lower data costs, more decentralized. PageSpeed will also increases by not blocking page load. Designed for use with [Webpack][webpack] and [atorable-react][atorable-react-npm].
 
