@@ -19,7 +19,7 @@ As more users visit your site the more users serve up your content. More users m
 
 The `atorable-loader` resolves `import`/`require()` of a file into a [Webtorrent](https://webtorrent.io/) magnet uri. During the webpack build the target file is emitted along with the corresponding torrent file into the output directory. The emitted files act as the seeds for the torrent when the root url is provided to the build. [Atorable.com](https://www.atorable.com/) offers a paid plans that integrates easily with your build to further decrease your server load. [Contact us][contact] for custom solutions.
 
-#### [Demo][atorable-react]
+#### [Demo][atorable]
 
 ## Getting Started
 
@@ -227,3 +227,4 @@ module.exports = {
 [atorable-react-npm]: https://www.npmjs.com/package/atorable-react
 [webpack]: https://webpack.js.org/
 [contact]: https://www.atorable.com/contact
+[atorable]: https://www.atorable.com
