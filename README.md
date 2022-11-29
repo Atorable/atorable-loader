@@ -15,10 +15,6 @@
 
 High data costs? Slow PageSpeed? High server load? Need a solution for viral content? [Atorable.com](https://www.atorable.com/) moves more content.
 
-#### Venmo Challenge
-
-I will venmo $10 to the first 10 users that send me proof of their use of Atorable on a live website. To qualify, you must sign up for a free trial @ [Atorable](https://www.atorable.com/) and use both [atorable-react][atorable-react-npm] and `atorable-loader` with an API key. When you are ready to display your content use the contact form @ [Contact Us](https://www.atorable.com/contact).
-
 As more users visit your site the more users serve up your content. More users makes faster downloads, less server load, lower data costs, more decentralized. PageSpeed will also increases by not blocking page load. Designed for use with [Webpack][webpack] and [atorable-react][atorable-react-npm].
 
 The `atorable-loader` resolves `import`/`require()` of a file into a [Webtorrent](https://webtorrent.io/) magnet uri. During the webpack build the target file is emitted along with the corresponding torrent file into the output directory. The emitted files act as the seeds for the torrent when the root url is provided to the build. [Atorable.com](https://www.atorable.com/) offers a paid plans that integrates easily with your build to further decrease your server load. [Contact us][contact] for custom solutions.
